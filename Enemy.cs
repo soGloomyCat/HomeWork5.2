@@ -6,20 +6,20 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
     
-    private int _number—urrentSpawner;
+    private int _numberCurrentSpawner;
 
     private void Start()
     {
-        _number—urrentSpawner = Spawner.numberCurrentSpawner;
+        _numberCurrentSpawner = Spawner.numberCurrentSpawner;
     }
 
     private void Update()
     {
-        if (_number—urrentSpawner == 0)
+        if (_numberCurrentSpawner == 0)
         {
             GetComponent<Transform>().Translate(Vector3.left * _speed * Time.deltaTime);
         }
-        else if (_number—urrentSpawner == 1)
+        else if (_numberCurrentSpawner == 1)
         {
             GetComponent<Transform>().Translate(Vector3.right * _speed * Time.deltaTime);
         }
