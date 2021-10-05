@@ -5,37 +5,37 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Transform _path;
-    [SerializeField] private GameObject _enemy;
+    [SerializeField] private Enemy _enemy;
     [SerializeField] private int _enemyCount;
     [SerializeField] private float _delaySpawn;
 
     private Transform[] _spawnPositions;
-    private int currentNumberEnemy;
+    private int _currentNumberEnemy;
 
-    public static int number—urrentSpawner { get; private set; }
+    public static int numberCurrentSpawner { get; private set; }
 
     private void Start()
     {
         _spawnPositions = new Transform[_path.childCount];
-        currentNumberEnemy = 1;
-        number—urrentSpawner = 0;
+        _currentNumberEnemy = 1;
+        numberCurrentSpawner = 0;
 
         for (int i = 0; i < _spawnPositions.Length; i++)
         {
             _spawnPositions[i] = _path.GetChild(i);
         }
 
-        StartCoroutine("Spawn");
+        StartCoroutine(Spawn());
     }
     
     private IEnumerator Spawn()
     {
-        Instantiate(_enemy, _spawnPositions[number—urrentSpawner].position, Quaternion.identity);
-        number—urrentSpawner++;
+        Instantiate(_enemy, _spawnPositions[numberCurrentSpawner].position, Quaternion.identity);
+        numberCurrentSpawner++;
 
-        if (number—urrentSpawner >= _spawnPositions.Length)
+        if (numberCurrentSpawner >= _spawnPositions.Length)
         {
-            number—urrentSpawner = 0;
+            numberCurrentSpawner = 0;
         }
 
         yield return new WaitForSeconds(_delaySpawn);
@@ -44,10 +44,10 @@ public class Spawner : MonoBehaviour
 
     private void Repeat()
     {
-        if (currentNumberEnemy < _enemyCount)
+        if (_currentNumberEnemy < _enemyCount)
         {
-            currentNumberEnemy++;
-            StartCoroutine("Spawn");
+            _currentNumberEnemy++;
+            StartCoroutine(Spawn());
         }
     }
 }
