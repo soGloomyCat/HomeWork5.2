@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
         _enemyDirection = GetComponent<Transform>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         _enemyDirection.Translate(Vector3.left * _speed * Time.deltaTime);
     }
