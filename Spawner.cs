@@ -11,14 +11,13 @@ public class Spawner : MonoBehaviour
 
     private Transform[] _spawnPositions;
     private int _currentNumberEnemy;
-
-    public static int numberCurrentSpawner { get; private set; }
+    private int _numberCurrentSpawner;
 
     private void Start()
     {
         _spawnPositions = new Transform[_path.childCount];
-        _currentNumberEnemy = 1;
-        numberCurrentSpawner = 0;
+        _currentNumberEnemy = 0;
+        _numberCurrentSpawner = 0;
 
         for (int i = 0; i < _spawnPositions.Length; i++)
         {
@@ -30,24 +29,26 @@ public class Spawner : MonoBehaviour
     
     private IEnumerator Spawn()
     {
-        Instantiate(_enemy, _spawnPositions[numberCurrentSpawner].position, Quaternion.identity);
-        numberCurrentSpawner++;
-
-        if (numberCurrentSpawner >= _spawnPositions.Length)
+        while (_currentNumberEnemy != _enemyCount)
         {
-            numberCurrentSpawner = 0;
-        }
+            if (_numberCurrentSpawner == 0)
+            {
+                Instantiate(_enemy, _spawnPositions[_numberCurrentSpawner].position, Quaternion.identity);
+            }
+            else if (_numberCurrentSpawner == 1)
+            {
+                Instantiate(_enemy, _spawnPositions[_numberCurrentSpawner].position, Quaternion.Euler(0, 180, 0));
+            }
 
-        yield return new WaitForSeconds(_delaySpawn);
-        Repeat();
-    }
-
-    private void Repeat()
-    {
-        if (_currentNumberEnemy < _enemyCount)
-        {
+            _numberCurrentSpawner++;
             _currentNumberEnemy++;
-            StartCoroutine(Spawn());
+
+            if (_numberCurrentSpawner >= _spawnPositions.Length)
+            {
+                _numberCurrentSpawner = 0;
+            }
+
+            yield return new WaitForSeconds(_delaySpawn);
         }
     }
 }

@@ -5,23 +5,16 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    
-    private int _numberCurrentSpawner;
+
+    private Transform _enemyDirection;
 
     private void Start()
     {
-        _numberCurrentSpawner = Spawner.numberCurrentSpawner;
+        _enemyDirection = GetComponent<Transform>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_numberCurrentSpawner == 0)
-        {
-            GetComponent<Transform>().Translate(Vector3.left * _speed * Time.deltaTime);
-        }
-        else if (_numberCurrentSpawner == 1)
-        {
-            GetComponent<Transform>().Translate(Vector3.right * _speed * Time.deltaTime);
-        }
+        _enemyDirection.Translate(Vector3.left * _speed * Time.deltaTime);
     }
 }
