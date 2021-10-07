@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Transform))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
@@ -15,6 +16,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _enemyDirection.Translate(Vector3.left * _speed * Time.deltaTime);
+        _enemyDirection.Translate(Vector3.right * _speed * Time.deltaTime);
     }
 }
