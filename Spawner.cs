@@ -12,14 +12,12 @@ public class Spawner : MonoBehaviour
     private Transform[] _spawnPositions;
     private int _currentNumberEnemy;
     private int _numberCurrentSpawner;
-    private int _compensationValue;
 
     private void Start()
     {
         _spawnPositions = new Transform[_path.childCount];
         _currentNumberEnemy = 0;
         _numberCurrentSpawner = 0;
-        _compensationValue = 2;
 
         for (int i = 0; i < _spawnPositions.Length; i++)
         {
@@ -33,21 +31,10 @@ public class Spawner : MonoBehaviour
     {
         WaitForSeconds waiter = new WaitForSeconds(_delaySpawn);
 
-        while (_currentNumberEnemy * _compensationValue != _enemyCount)
+        while (_currentNumberEnemy != _enemyCount)
         {
-            for (int i = 0; i < _spawnPositions.Length; i++)
-            {
-                if (_spawnPositions[i].position.x < new Vector3(0, 0, 0).x)
-                {
-                    Instantiate(_enemy, _spawnPositions[i].position, Quaternion.identity);
-                    yield return waiter;
-                }
-                else if (_spawnPositions[i].position.x > new Vector3(0, 0, 0).x)
-                {
-                    Instantiate(_enemy, _spawnPositions[i].position, Quaternion.Euler(0, 180, 0));
-                    yield return waiter;
-                }
-            }
+            Instantiate(_enemy, _spawnPositions[_numberCurrentSpawner].position, Quaternion.identity);
+            yield return waiter;
             
             _numberCurrentSpawner++;
             _currentNumberEnemy++;
